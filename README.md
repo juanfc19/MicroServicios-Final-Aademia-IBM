@@ -51,7 +51,7 @@ Cada endpoint tendra como salida la misma respuesta en formato JSON, contiene un
 ```
 
 #### EndPoints
-Mi propuesta fue crear 3 endpoints diferentes con entradas diferentes, el primer endPoint es :
+Mi propuesta fue crear 3 endpoints diferentes con entradas diferentes:
 
 - **Buscar por Estado y/o Colonia**
 
@@ -100,4 +100,93 @@ http://localhost:8888/api/sucursales/buscar-gps
 #### PRUEBA POSTMAN
 
 ### Perfiles de Tarjetas
+
+El servicio Perfiles de Tarjetas tiene como objetivo obtener los tipos de tarjetas de credito de acuerdo al perfil proporcionado por el cliente, dicho perfil debe tener lo siguiente:
+
+- **Pasiones:** Corresponde a lo que mas le gusta hacer al cliente.
+- **Salario:** Corresponde al salario mensual del cliente y que no puede ser menor a 7000 pesos.
+- **Edad:** Corresponde a la edad de cliente, la cual debe ser mayor o igual a 18 años.
+
+El proyecto esta divido en seis paquetes:
+
+- Modelo
+
+Este paquete incluye el modelo Perfil, el cual se utilizara como respuesta de nuestro servicio, ademas se incluyen un modelo llamado PerfilRequest, el cual sera el encargado de recibir el body de nuestra consulta.
+
+- DAO
+
+Este paquete incluye nuestra intefaz llamada IPerfilDao y la clase PerfilDaoImpl la cual sera de tipo @Repository y contendra nuestro JDBCTemplate para realizar la consulta a nuestra base de datos.
+
+- Mapping
+
+Este paquete contiene una clase llamada Mapping la cual sera la encargada de definir la constante para realizar el llamado a todos nuestros endpoints.
+
+- Exception
+
+Este paquete guarda todas nuestras excepciones personalizadas que podrán ejecutarse en un momento en especifico, ademas contiene la clase GlobalExceptionHandler, la cual esta anotada con @ControllerAdvice y sera la encargada de guardar y ejecutar las excepciones al momento de ser lanzadas. Existen 4 tipos de excepciones: PerfilNotFoundException, EdadInvalidaException, EmptyException y SalarioInvalidoException. Ademas se incluye una clase Response la cual sera nuestro estandar para realizar las respuestas de la api.
+
+- Service
+
+Este paquete contiene dos clases, la primera es una interfaz llamada IPerfilService, la cual sera el contrato que contiene todas las funciones que deberan utilizarce para la obtener el peril del cliente. La clase PerfilServiceImpl esta anotada con @Service y es la encargada de comunicarse con nuestro dao para recibir la respuesta de nuestra base de datos.
+
+- Controller
+
+Este paquete contiene una clase llamada PerfilRestController de tipo @RestController, la cual contiene los endpoints de nuestro microservicio y en caso de existir algun error lanzara las excepciones correspondientes.
+
+#### Inputs
+El servicio recibira como entrada:
+
+```
+{
+    "pasion":"Shopping",
+    "salario":50000,
+    "edad":23
+}
+```
+
+#### Output
+Cada endpoint tendra como salida la misma respuesta en formato JSON, contiene un **Estatus**, el cual informará al usuario acerca del estatus de la petición, ya sea si tuvo un error o la petición se cumplio con exíto. El parametro **Message** es el mensaje de respuesta sobre la petición. El parametro **DateTime** es la fecha y hora en la que se realiza la petición y el parametro **Data** contiene los datos de respuesta, en este caso regresa una lista de sucursales.
+
+```
+{
+  "status": HttpStatus
+  "message": String
+  "dateTime": LocalDate
+  "data": Perfil
+}
+```
+
+#### EndPoints
+
+Mi propuesta fue crear 1 endpoint, el cual recibira la pasion, el salario y la edad, en caso de que la pasion sea vacia, se lanzara una excepción, si el salario es menor a $7000 se lanzara una excepción indicando que para obtener una tarjeta de credito el salario debe ser mayor o igual a $7000, si la edad es menor a 18 años se lanzara una excepción indicando que el cliente debe ser mayor para obtener una tarjeta de credito. 
+
+**Solución**
+
+Para plantear la solución, se desarrollo una base de datos que previamente fue normalizada, la base fue cargada en H2 y se crearon los archivos schema.sql y data.sql.
+
+Se utilizo una base de datos para guardar los perfiles, porque gracias a utilizarlo de esta forma lo podemos hacer escalable en caso de que en algun futuro se deseen agregar mas perfiles se pueden agregar sin ningun problema. Otro punto importante es la rapidez con la que podemos obtener un perfil de tarjetas de credito, esto es gracias a que eixiste un query que es el encargado de obtener las tarjetas de credito de acuerdo a las entradas establecidas, con ello nos ahorramos en escribir demasiado código en nuestro microservicio, haciendo que se vea mas limpio y mejorando considerablemente el rendimiento gracias a la rapidez del query.
+
+- POST
+
+http://localhost:8090/api/perfiles/obtener-perfil
+
+- BODY
+
+```
+{
+    "pasion":"Shopping",
+    "salario":50000,
+    "edad":27
+}
+```
+
+#### PRUEBA POSTMAN
+
+
+### Eureka Server 
+
+Nos permite crear un servidor en Eureka donde podremos registrar nuestros microservicios y hacer que se conozcan entre ellos, se registraron los dos microservicios creados en el proyecto; SUCURSALES-SERVICE y PERFILES-SERVICE
+
+![Eureka](https://user-images.githubusercontent.com/49379405/137525303-854add52-ae45-44fc-809e-49f24fc2c070.PNG)
+
 
