@@ -1,0 +1,11 @@
+server:
+  port: 8888
+  
+spring:
+  application:
+    name: SUCURSALES-SERVICE
+
+feign:
+  sucursales:
+    uri: https://www.banamex.com
+    getSucursales: /localizador/jsonP/json5.json
