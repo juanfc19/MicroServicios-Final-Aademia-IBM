@@ -99,6 +99,50 @@ http://localhost:8888/api/sucursales/buscar-gps
 
 #### PRUEBA POSTMAN
 
+**Buscar por Estado Colonia**
+
+- Exception Estado Vacio
+
+![ExepcionEstadoVacio](https://user-images.githubusercontent.com/49379405/137559042-f49b777d-62f4-4b1a-b540-2885be744c93.PNG)
+
+- Sucursales no Encontradas
+
+![SucursalesNotFound](https://user-images.githubusercontent.com/49379405/137559082-bcb85f43-847c-492e-acc8-20f1769a7f5a.PNG)
+
+- Sucursales Encontradas
+
+![SucursalesEncontradasEstadoColonia](https://user-images.githubusercontent.com/49379405/137559122-f5f48715-a961-406a-8115-dd07b212a414.PNG)
+
+**Buscar por Código postal**
+
+- Exception Cp vacio
+
+![CpNullException](https://user-images.githubusercontent.com/49379405/137559199-eacb7fae-b8a4-4b47-9aef-e41932ce4fe7.PNG)
+
+- Formato Cp invalido
+
+![FormatoInvalidoCp](https://user-images.githubusercontent.com/49379405/137559225-6c3df905-fe04-4ade-b18f-d140429e453c.PNG)
+
+- Sucursales Encontradas por Cp
+
+![SucursalesEncontrdasByCp](https://user-images.githubusercontent.com/49379405/137559296-8aa146ef-28d1-4cb9-b17a-f8ec1e660cde.PNG)
+
+**Buscar por GPS**
+
+- Latitud Vacio
+
+![LatEmptyException](https://user-images.githubusercontent.com/49379405/137559324-79f2a698-b026-4ea6-a848-14abb8a3c031.PNG)
+
+- Longitud Vacio
+
+![LngEmptyException](https://user-images.githubusercontent.com/49379405/137559346-d2805400-f072-4cea-b38d-b391f2560905.PNG)
+
+- Sucursales encontradas a 2 km desde las coordenadas proporcionadas
+
+![GpsSucursales](https://user-images.githubusercontent.com/49379405/137559392-6dc271f1-ce90-42fa-a254-d9dab11d70fc.PNG)
+
+
+
 ### Perfiles de Tarjetas
 
 El servicio Perfiles de Tarjetas tiene como objetivo obtener los tipos de tarjetas de credito de acuerdo al perfil proporcionado por el cliente, dicho perfil debe tener lo siguiente:
@@ -182,6 +226,28 @@ http://localhost:8090/api/perfiles/obtener-perfil
 
 #### PRUEBA POSTMAN
 
+- Campos Requeridos Vacios
+
+![CamposVaciosPerfilTarjetas](https://user-images.githubusercontent.com/49379405/137559470-5bf4b186-137d-48b4-9a3b-7a1aa4e028a0.PNG)
+
+- Edad Menor a 18 años Exception
+
+![EdadException](https://user-images.githubusercontent.com/49379405/137559506-0235a4a7-0ec6-4eed-9b89-597b8c284655.PNG)
+
+- Salario menor a 7000 Exception
+
+![SalarioMenorException](https://user-images.githubusercontent.com/49379405/137559546-fe3f9af1-ba17-4a5b-a502-41cfe2116a59.PNG)
+
+- Perfil No Encontrado
+
+![PerfilNoEncontrado](https://user-images.githubusercontent.com/49379405/137559566-68ff1ed3-38b3-457e-ba07-1d63b99e9919.PNG)
+
+- Perfil de tarjetas Encontrado
+
+![PerfilEncontrado1](https://user-images.githubusercontent.com/49379405/137559598-74aa3008-779b-43fd-a774-4aba3c7c4cd0.PNG)
+
+![PerfilEncontrado2](https://user-images.githubusercontent.com/49379405/137559607-78882c14-ee2b-48d5-85dd-e46f49b89b2f.PNG)
+
 
 ### Eureka Server 
 
@@ -189,4 +255,7 @@ Nos permite crear un servidor en Eureka donde podremos registrar nuestros micros
 
 ![Eureka](https://user-images.githubusercontent.com/49379405/137525303-854add52-ae45-44fc-809e-49f24fc2c070.PNG)
 
+## Conclusiones Finales
 
+Podemos llegar a la conclusión de que se cumplieron los requisitos previamente establecidos en el documento, son microservicios que pueden irse haciendo poco a poco más escalables y agregar más validaciones, asi como un cache para guardar información de relevancia y no hacer demasiadas consultas hacia algun servicio externo, como lo es el de las sucursales, ya que al colocar cache podriamos ahorrar tiempo en procesamiento y dinero en caso que fuera una api de paga.
+La academia de IBM fue una muy buena experiencia para mi, ya que gracias a ella pude obtener nuevos conocimientos en Spring y tener un crecimiento tanto personal como en mi vida profesional.
