@@ -97,5 +97,7 @@ http://localhost:8888/api/sucursales/buscar-gps
 }
 ```
 
+#### PRUEBA POSTMAN
+
 ### Perfiles de Tarjetas
 
